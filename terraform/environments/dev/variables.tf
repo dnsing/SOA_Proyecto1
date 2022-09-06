@@ -1,5 +1,5 @@
 variable "project_id" {
-    default = "need change"
+    default = "soaproyecto1"
 }
 
 variable "region" {
