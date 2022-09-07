@@ -29,7 +29,7 @@ steps:
       echo "*********** Installing pylint ************"
       pip3 install -U pylint
       echo "*********** Checking code ************"
-      cd pyfunction/
+      cd cloud_function
       #pylint main.py
 
 - id: 'tf init'
@@ -38,11 +38,11 @@ steps:
   args: 
   - '-c'
   - |
-      if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME
+      if [ -d "terraform/enviroments/$BRANCH_NAME/" ]; then
+        cd terraform/enviroments/$BRANCH_NAME
         terraform init
       else
-        for dir in environments/*/
+        for dir in terraform/enviroments/*/
         do 
           cd ${dir}   
           env=${dir%*/}
@@ -52,7 +52,7 @@ steps:
           echo "******* At environment: ${env} ********"
           echo "*************************************************"
           terraform init || exit 1
-          cd ../../
+          cd ../../../
         done
       fi 
 
@@ -63,11 +63,11 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME
+      if [ -d "terraform/enviroments/$BRANCH_NAME/" ]; then
+        cd terraform/enviroments/$BRANCH_NAME
         terraform plan
       else
-        for dir in environments/*/
+        for dir in terraform/enviroments/*/
         do 
           cd ${dir}   
           env=${dir%*/}
@@ -77,7 +77,7 @@ steps:
           echo "******* At environment: ${env} ********"
           echo "*************************************************"
           terraform plan || exit 1
-          cd ../../
+          cd ../../../
         done
       fi 
 # [END tf-plan]
@@ -89,8 +89,8 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME      
+      if [ -d "terraform/enviroments/$BRANCH_NAME/" ]; then
+        cd terraform/enviroments/$BRANCH_NAME     
         terraform apply -auto-approve
       else
         echo "***************************** SKIPPING APPLYING *******************************"
