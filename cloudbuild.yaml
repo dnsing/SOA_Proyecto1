@@ -40,7 +40,7 @@ steps:
   - |
       if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
         cd terraform/environments/$BRANCH_NAME
-        terraform init
+        terraform init -reconfigure
       else
         for dir in terraform/environments/*/
         do 
@@ -51,7 +51,7 @@ steps:
           echo "*************** TERRAFORM INIT ******************"
           echo "******* At environment: ${env} ********"
           echo "*************************************************"
-          terraform init || exit 1
+          terraform init -reconfigure || exit 1
           cd ../../../
         done
       fi 
