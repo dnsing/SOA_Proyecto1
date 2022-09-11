@@ -4,7 +4,7 @@
 from google.cloud import vision
 import sqlalchemy
 import pandas as pd
-
+import os
 
 vision_client = vision.ImageAnnotatorClient()
 
