@@ -1,4 +1,3 @@
 pytest
-
-
-
+pylint
+google-cloud-vision
