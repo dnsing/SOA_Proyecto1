@@ -9,15 +9,15 @@ vision_client = vision.ImageAnnotatorClient()
 
 def main(data, context):
     if(data == {}):
-        print("Analyzing default image")
+        print("Analyzing default image:")
         imageURL = "images/default.jpg"
         with open(imageURL, 'rb') as image_file:
             content = image_file.read()
         image = vision.Image(content=content)
 
     else:
-        imageURL = data["name"]
-        print("Analyzing", imageURL ,"image")
+        imageURL = data["image"]
+        print("Analyzing ", imageURL ," image:")
         bucket = data["bucket"]
         blob_uri = f"gs://{bucket}/{imageURL}"
         image = vision.Image(source=vision.ImageSource(image_uri=blob_uri))
@@ -28,7 +28,6 @@ def main(data, context):
     likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
                        'LIKELY', 'VERY_LIKELY')
 
-    print('Faces:')
 
     for face in faces:
         result={  'anger': likelihood_name[face.anger_likelihood],
