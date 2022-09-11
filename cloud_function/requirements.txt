@@ -3,3 +3,4 @@ pylint
 google-cloud-vision
 SQLAlchemy     
 PyMySQL
+pandas
