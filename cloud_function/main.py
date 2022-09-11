@@ -2,12 +2,25 @@
 # pylint: disable=C0114
 
 from google.cloud import vision
+import sqlalchemy
 
 
 vision_client = vision.ImageAnnotatorClient()
 
-
 def main(data, context):
+
+    # Variables
+    drivername = "mysql+pymysql"
+    username = os.environ.get("username")
+    password = os.environ.get("password")
+    database = os.environ.get("database")
+    project_id = os.environ.get("project_id")
+    instance_region=os.environ.get("instance_region")
+    instance_name=os.environ.get("instance_name")
+    query_string = dict({"unix_socket": f"/cloudsql/{project_id}:{instance_region}:{instance_name}"})
+    table = os.environ.get("table")
+
+    
     if(data == {}):
         print("Analyzing default image:")
         imageURL = "images/default.jpg"
@@ -43,4 +56,30 @@ def main(data, context):
             '{}\nFor more info on error messages, check: '
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
+    else:
+        result["imageUrl"]=imageUrl
+        df = pd.DataFrame.from_dict(result)
+        # Create a sql pool connection
+        pool = sqlalchemy.create_engine(
+            sqlalchemy.engine.url.URL(
+                drivername=drivername,
+                username=username,
+                password=password,
+                database=database,
+                query=query_string,
+            ),
+            pool_size=5,
+            max_overflow=2,
+            pool_timeout=30,
+            pool_recycle=1800
+        )
+        
+        # Connect to the database and append the rows into the target table
+        try:
+            db_connection = pool.connect()
+            frame = df.to_sql(table, db_connection, if_exists="append", index=False)
+            db_connection.close()
+            logging.info("Rows inserted into table successfully...")
+        except Exception as e:
+            return 'Error: {}'.format(str(e))
 
