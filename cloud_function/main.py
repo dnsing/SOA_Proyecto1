@@ -1,64 +1,48 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=invalid-name
-# pylint: disable=unused-argument
-# pylint: disable=pointless-string-statement
-# pylint: disable=trailing-whitespace
-# pylint: disable=superfluous-parens
-from google.cloud import vision, storage # pylint: disable=import-error
+# pylint: disable=C0103
+# pylint: disable=C0114
 
-storage_client = storage.Client()
+from google.cloud import vision
+
+
 vision_client = vision.ImageAnnotatorClient()
 
-#Funcion main
-def main(data, context):# pylint: disable=missing-function-docstring
-    print("Evento-contexto", context)
-    
-    print(f"Data: {data}.")
-    
-    if (data == {}):
-        print("Sin datos de entrada")
-        image_to_open = 'images/cara.jpg'
 
-        with open(image_to_open, 'rb') as image_file:
+def main(data, context):
+    print("Contexto", context)
+    print("Evento", event)
+    if(data == {}):
+        print("Analyzing default image")
+        imageURL = "images/default.jpg"
+        with io.open(path, 'rb') as image_file:
             content = image_file.read()
-
         image = vision.Image(content=content)
-        
-        print("Analyzing test image.")
 
-        face_response = vision_client.face_detection(image=image)
-
-        for face_detection in face_response.face_annotations:
-            d={
-                'confidence': face_detection.detection_confidence,
-                'joy': face_detection.joy_likelihood,
-                'sorrow': face_detection.sorrow_likelihood,
-                'surprise': face_detection.surprise_likelihood,
-                'anger': face_detection.anger_likelihood
-            }
-            print(d)
     else:
-        file_data = data
+        imageURL = data["image"]
+        print("Analyzing", imageURL ,"image")
+        bucket = data["bucket"]
+        blob_uri = f"gs://{bucket}/{imageURL}"
+        image = vision.Image(source=vision.ImageSource(image_uri=blob_uri))
+        
 
-        file_name = file_data["name"]
+    response = vision_client.face_detection(image=image)
+    faces = response.face_annotations
 
-        bucket_name = file_data["bucket"]
+    # Names of likelihood from google.cloud.vision.enums
+    likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
+                       'LIKELY', 'VERY_LIKELY')
+    print('Faces:')
 
-        blob_uri = f"gs://{bucket_name}/{file_name}"
+    for face in faces:
+        result={'anger: {}'.format(likelihood_name[face.anger_likelihood])
+                'joy: {}'.format(likelihood_name[face.joy_likelihood])
+                'surprise: {}'.format(likelihood_name[face.surprise_likelihood])
+                }
+        print(result)
 
-        blob_source = vision.Image(source=vision.ImageSource(image_uri=blob_uri))
 
-
-        print(f"Analyzing {file_name}.")
-
-        face_response = vision_client.face_detection(image=blob_source)
-
-        for face_detection in face_response.face_annotations:
-            d={
-                'confidence': face_detection.detection_confidence,
-                'joy': face_detection.joy_likelihood,
-                'sorrow': face_detection.sorrow_likelihood,
-                'surprise': face_detection.surprise_likelihood,
-                'anger': face_detection.anger_likelihood
-            }
-            print(d)
+    if response.error.message:
+        raise Exception(
+            '{}\nFor more info on error messages, check: '
+            'https://cloud.google.com/apis/design/errors'.format(
+                response.error.message))
