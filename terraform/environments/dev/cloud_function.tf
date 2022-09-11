@@ -9,7 +9,7 @@ resource "google_storage_bucket_object" "zip" {
 
     # Append to the MD5 checksum of the files's content
     # to force the zip to be updated as soon as a change occurs
-    image         = "src-${data.archive_file.source.output_md5}.zip"
+    name         = "src-${data.archive_file.source.output_md5}.zip"
     bucket       = google_storage_bucket.function_bucket.name
 
     # Dependencies are automatically inferred so these lines can be deleted

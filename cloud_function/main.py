@@ -16,7 +16,7 @@ def main(data, context):
         image = vision.Image(content=content)
 
     else:
-        imageURL = data["image"]
+        imageURL = data["name"]
         print("Analyzing", imageURL ,"image")
         bucket = data["bucket"]
         blob_uri = f"gs://{bucket}/{imageURL}"
