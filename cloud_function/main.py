@@ -5,6 +5,7 @@ from google.cloud import vision
 import sqlalchemy
 import pandas as pd
 import os
+import json
 
 vision_client = vision.ImageAnnotatorClient()
 
@@ -64,7 +65,7 @@ def main(data, context):
         print(imageURL)
         result['imageUrl']=imageURL
         print(result)
-        df = pd.DataFrame.from_dict(result)
+        df = pd.DataFrame.from_dict(json.loads(result))
         print(df)
         # Create a sql pool connection
         pool = sqlalchemy.create_engine(
