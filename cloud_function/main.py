@@ -63,7 +63,9 @@ def main(data, context):
     else:
         print(imageURL)
         result['imageUrl']=imageURL
+        print(result)
         df = pd.DataFrame.from_dict(result)
+        print(df)
         # Create a sql pool connection
         pool = sqlalchemy.create_engine(
             sqlalchemy.engine.url.URL(
