@@ -61,7 +61,8 @@ def main(data, context):
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
     else:
-        result["imageUrl"]=imageUrl
+        print(imageURL)
+        result['imageUrl']=imageURL
         df = pd.DataFrame.from_dict(result)
         # Create a sql pool connection
         pool = sqlalchemy.create_engine(
