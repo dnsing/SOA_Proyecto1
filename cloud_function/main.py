@@ -12,14 +12,14 @@ def main(data, context):
 
     # Variables
     drivername = "mysql+pymysql"
-    username = os.environ.get("username")
-    password = os.environ.get("password")
-    database = os.environ.get("database")
-    project_id = os.environ.get("project_id")
-    instance_region=os.environ.get("instance_region")
-    instance_name=os.environ.get("instance_name")
+    username = "root"
+    password = "root"
+    database = "imageEmotionsAnalysis"
+    project_id = "soaproyecto1"
+    instance_region= "us-central1"
+    instance_name= "instance"
     query_string = dict({"unix_socket": f"/cloudsql/{project_id}:{instance_region}:{instance_name}"})
-    table = os.environ.get("table")
+    table = "emotions"
 
     print(table)
     print(username)
