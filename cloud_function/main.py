@@ -21,6 +21,9 @@ def main(data, context):
     query_string = dict({"unix_socket": f"/cloudsql/{project_id}:{instance_region}:{instance_name}"})
     table = os.environ.get("table")
 
+    print(table)
+    print(username)
+
     
     if(data == {}):
         print("Analyzing default image:")
