@@ -14,7 +14,7 @@ def main(data, context):
     drivername = "mysql+pymysql"
     username = "root"
     password = "root"
-    database = "imageEmotionsAnalysis"
+    database = "emotionsTable"
     project_id = "soaproyecto1"
     instance_region= "us-central1"
     instance_name= "instance"
