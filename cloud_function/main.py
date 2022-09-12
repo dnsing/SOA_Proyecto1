@@ -65,7 +65,7 @@ def main(data, context):
         print(imageURL)
         result['imageUrl']=imageURL
         print(result)
-        df = pd.DataFrame.from_dict(json.dumps(result))
+        df = pd.DataFrame([result])
         print(df)
         # Create a sql pool connection
         pool = sqlalchemy.create_engine(
