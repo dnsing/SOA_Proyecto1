@@ -18,11 +18,15 @@ steps:
   entrypoint: pip
   args: ["install", "-r", "cloud_function/requirements.txt", "--user"]
 
-- id: 'check code'
+- id: 'check-code'
   name: 'python'
   entrypoint: 'python'  
   args: ["-m","pylint","cloud_function/main.py"]
   
+- id: 'unit-tests'
+  name: 'python'
+  entrypoint: 'python'  
+  args: ["-m","pytest","cloud_function/unitTests.py"]
   
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
