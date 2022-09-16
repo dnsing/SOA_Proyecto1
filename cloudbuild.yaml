@@ -14,9 +14,10 @@
 
 
 steps:
-- name: python
+- id: 'install-dependencies'
+  name: python
   entrypoint: pip
-  args: ["install", "-r", "cloud_function/requirements.txt", "--user"]
+  args: ["install", "-r", "cloud_function/requirements.txt", "--user", "--no-warn-script-location"]
 
 - id: 'check-code'
   name: 'python'
