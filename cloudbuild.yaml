@@ -20,8 +20,8 @@ steps:
 
 - id: 'check code'
   name: 'python'
-  entrypoint: 'pylint'  
-  args: ["main.py"]
+  entrypoint: 'python'  
+  args: ["-m","pylint","main.py"]
   
   
 - id: 'tf init'
