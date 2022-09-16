@@ -7,24 +7,24 @@ import pandas as pd
 
 vision_client = vision.ImageAnnotatorClient()
 
+# Variables
+drivername = "mysql+pymysql"
+username = "root"
+password = "root"
+database = "emotionsTable"
+project_id = "soaproyecto1"
+instance_region= "us-central1"
+instance_name= "instance"
+query_string = dict({"unix_socket": f"/cloudsql/
+                    {project_id}:{instance_region}:{instance_name}"}
+                     
 def main(data, context):
-
-    # Variables
-    drivername = "mysql+pymysql"
-    username = "root"
-    password = "root"
-    database = "emotionsTable"
-    project_id = "soaproyecto1"
-    instance_region= "us-central1"
-    instance_name= "instance"
-    query_string = dict({"unix_socket": f"/cloudsql/{project_id}:{instance_region}:{instance_name}"})
     table = "emotions"
 
     print(table)
     print(username)
-
     
-    if(data == {}):
+    if data == {}:
         print("Analyzing default image:")
         imageURL = "images/default.jpg"
         with open(imageURL, 'rb') as image_file:
@@ -36,8 +36,7 @@ def main(data, context):
         print("Analyzing ", imageURL ," image:")
         bucket = data["bucket"]
         blob_uri = f"gs://{bucket}/{imageURL}"
-        image = vision.Image(source=vision.ImageSource(image_uri=blob_uri))
-        
+        image = vision.Image(source=vision.ImageSource(image_uri=blob_uri))    
 
     response = vision_client.face_detection(image=image)
     faces = response.face_annotations
@@ -52,8 +51,7 @@ def main(data, context):
                   'surprise': likelihood_name[face.surprise_likelihood]
                 }
         print(result)
-
-
+        
     if response.error.message:
         raise Exception(
             '{}\nFor more info on error messages, check: '
@@ -79,13 +77,12 @@ def main(data, context):
             pool_timeout=30,
             pool_recycle=1800
         )
-        
         # Connect to the database and append the rows into the target table
         try:
             db_connection = pool.connect()
-            frame = df.to_sql(table, db_connection, if_exists="append", index=False)
+            df.to_sql(table, db_connection, if_exists="append", index=False)
             db_connection.close()
             logging.info("Rows inserted into table successfully...")
         except Exception as e:
-            return 'Error: {}'.format(str(e))
+            print('Error: {}'.format(str(e)))
 
