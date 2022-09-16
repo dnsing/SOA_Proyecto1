@@ -22,6 +22,7 @@ steps:
   args: 
   - '-c'
   - | 
+      cd cloud_function
       echo "************************************"
       echo "Runing unit test in branch $BRANCH_NAME"
       echo "************************************"
@@ -41,7 +42,6 @@ steps:
       pip3 install -U google-cloud
       pip3 install -U google-cloud-vision
       echo "*********** Checking code ************"
-      cd cloud_function
       pylint main.py
       echo "*********** Run UNIT TEST ************"
       python3 -m pytest unitTests.py
