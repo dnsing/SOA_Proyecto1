@@ -92,7 +92,7 @@ def main(data, context):
             db_connection = pool.connect()
             df.to_sql(table, db_connection, if_exists="append", index=False)
             db_connection.close()
-            logging.info("Rows inserted into table successfully...")
+            print("Rows inserted into table successfully...")
         except Exception as e:
             print('Error: {}'.format(str(e)))
 
