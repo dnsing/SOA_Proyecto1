@@ -19,7 +19,7 @@ resource "google_storage_bucket_object" "zip" {
     ]
 }
 resource "google_cloudfunctions_function" "function" {
-    name                  = "pruebas"
+    name                  = "SENTIMENT_ANALYSIS"
     runtime               = "python37"  # of course changeable
 
     # Get the source code of the cloud function as a Zip compression
@@ -31,7 +31,7 @@ resource "google_cloudfunctions_function" "function" {
 
     event_trigger {
         event_type = "google.storage.object.finalize"
-        resource   = "${var.project_id}-input-test"
+        resource   = "${var.project_id}-input"
     }
 
     # Dependencies are automatically inferred so these lines can be deleted

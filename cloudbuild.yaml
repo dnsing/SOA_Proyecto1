@@ -14,35 +14,32 @@
 
 
 steps:
-- id: 'code check'
-  name: 'alpine'
-  entrypoint: 'sh'  
-  args: 
-  - '-c'
-  - | 
-      echo "************************************"
-      echo "Checking Code in branch $BRANCH_NAME"
-      echo "************************************"
-      echo "*********** Installing pip ************"
-      apk add py3-pip
-      pip3 install -U setuptools
-      echo "*********** Installing pylint ************"
-      pip3 install -U pylint
-      echo "*********** Checking code ************"
-      cd pyfunction/
-      #pylint main.py
+- id: 'install-dependencies'
+  name: python
+  entrypoint: pip
+  args: ["install", "-r", "cloud_function/requirements.txt", "--user", "--no-warn-script-location"]
 
+- id: 'check-code'
+  name: 'python'
+  entrypoint: 'python'  
+  args: ["-m","pylint","cloud_function/main.py"]
+  
+- id: 'unit-tests'
+  name: 'python'
+  entrypoint: 'python'  
+  args: ["-m","pytest","cloud_function/unitTests.py"]
+  
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
   args: 
   - '-c'
   - |
-      if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME
-        terraform init
+      if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
+        cd terraform/environments/$BRANCH_NAME
+        terraform init -reconfigure
       else
-        for dir in environments/*/
+        for dir in terraform/environments/*/
         do 
           cd ${dir}   
           env=${dir%*/}
@@ -51,8 +48,8 @@ steps:
           echo "*************** TERRAFORM INIT ******************"
           echo "******* At environment: ${env} ********"
           echo "*************************************************"
-          terraform init || exit 1
-          cd ../../
+          terraform init -reconfigure || exit 1
+          cd ../../../
         done
       fi 
 
@@ -63,11 +60,11 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME
+      if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
+        cd terraform/environments/$BRANCH_NAME
         terraform plan
       else
-        for dir in environments/*/
+        for dir in terraform/environments/*/
         do 
           cd ${dir}   
           env=${dir%*/}
@@ -77,7 +74,7 @@ steps:
           echo "******* At environment: ${env} ********"
           echo "*************************************************"
           terraform plan || exit 1
-          cd ../../
+          cd ../../../
         done
       fi 
 # [END tf-plan]
@@ -89,8 +86,8 @@ steps:
   args: 
   - '-c'
   - | 
-      if [ -d "environments/$BRANCH_NAME/" ]; then
-        cd environments/$BRANCH_NAME      
+      if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
+        cd terraform/environments/$BRANCH_NAME     
         terraform apply -auto-approve
       else
         echo "***************************** SKIPPING APPLYING *******************************"
