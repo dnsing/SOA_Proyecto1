@@ -15,10 +15,6 @@
 
 steps:
 
-- name: python
-  entrypoint: pip
-  args: ["install", "-r", "requirements.txt", "--user"]
-
       
 - id: 'check code and unit test'
   name: 'alpine'
@@ -33,7 +29,7 @@ steps:
       echo "*********** Installing pip ************"
       apk add py-pip
       echo "*********** Installing requirements ************"
-
+      pip install -r requirements.txt --user
       echo "*********** Checking code ************"
       pylint main.py
       echo "*********** Run UNIT TEST ************"
