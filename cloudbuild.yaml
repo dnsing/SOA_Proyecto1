@@ -17,7 +17,7 @@ steps:
 
       
 - id: 'check code and unit test'
-  name: 'ubuntu'
+  name: 'alpine'
   entrypoint: 'sh'  
   args: 
   - '-c'
@@ -36,6 +36,7 @@ steps:
       pip3 install -U numpy==1.16.1
       pip3 -m pip install pandas
       python3 -c 'import pandas'
+      pip3 install pandas
       pip3 install -U mock
       pip3 install -U google-cloud
       pip3 install -U google-cloud-vision
