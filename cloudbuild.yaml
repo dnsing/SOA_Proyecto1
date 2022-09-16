@@ -15,7 +15,7 @@
 
 steps:
 - id: 'code check'
-  name: 'ubuntu'
+  name: 'alpine'
   entrypoint: 'sh'  
   args: 
   - '-c'
@@ -33,7 +33,7 @@ steps:
       pylint main.py
       
 - id: 'unit test'
-  name: 'ubuntu'
+  name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'sh'  
   args: 
   - '-c'
