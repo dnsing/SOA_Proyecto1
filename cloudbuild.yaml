@@ -29,6 +29,7 @@ steps:
       apk add py3-pip
       pip3 install -U setuptools
       echo "*********** Installing requirements ************"
+      pip3 install -U pylint
       pip3 install -U pytest
       pip3 install -U SQLAlchemy==1.3.12      
       pip3 install -U PyMySQL==0.9.3
@@ -37,8 +38,10 @@ steps:
       pip3 install -U mock
       pip3 install -U google-cloud
       pip3 install -U google-cloud-vision
-      echo "*********** Run UNIT TEST ************"
+      echo "*********** Checking code ************"
       cd cloud_function
+      pylint main.py
+      echo "*********** Run UNIT TEST ************"
       python3 -m pytest unitTests.py
   
 - id: 'tf init'
