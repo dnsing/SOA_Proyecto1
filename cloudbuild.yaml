@@ -14,29 +14,18 @@
 
 
 steps:
+- name: python
+  entrypoint: pip
+  args: ["install", "-r", "/cloud_function/requirements.txt", "--user"]
 
-      
-- id: 'check code and unit test'
-  name: 'alpine'
-  entrypoint: 'sh'  
-  args: 
-  - '-c'
-  - | 
-      cd cloud_function
-      echo "************************************"
-      echo "Runing unit test in branch $BRANCH_NAME"
-      echo "************************************"
-      echo "*********** Installing pip ************"
-      apk add py-pip
-      echo "*********** Installing requirements ************"
-      apt-get install python-dev build-essential
-      pip install .
-      pip install --upgrade pip
-      pip install -r requirements.txt --user
-      echo "*********** Checking code ************"
-      pylint main.py
-      echo "*********** Run UNIT TEST ************"
-      python -m pytest unitTests.py
+- name: python
+  entrypoint: pylint
+  args: ["main.py"]
+
+- name: python
+  entrypoint: python3
+  args: ["-m", "pytest", "unitTests.py"]
+
   
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
