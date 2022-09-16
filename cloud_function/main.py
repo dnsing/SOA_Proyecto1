@@ -95,4 +95,3 @@ def main(data, context):
             print("Rows inserted into table successfully...")
         except Exception as e:
             print('Error: {}'.format(str(e)))
-
