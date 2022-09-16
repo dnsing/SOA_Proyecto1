@@ -35,7 +35,7 @@ steps:
       pip3 install -U pandas
       echo "*********** Run UNIT TEST ************"
       cd cloud_function
-      python -m pytest unitTests.py
+      python3 -m pytest unitTests.py
   
 - id: 'tf init'
   name: 'hashicorp/terraform:1.0.0'
