@@ -13,14 +13,6 @@ mock_context.resource = {
 
 
 
-def test_default(capsys):
-    data = {}
-    # Call tested function
-    main.main(data, mock_context)
-    out, err = capsys.readouterr()
-    assert "{'anger': 'VERY_UNLIKELY', 'joy': 'VERY_LIKELY', 'sorrow': 'VERY_UNLIKELY', 'surprise': 'VERY_UNLIKELY'}" in out
-
-
 def test_bucket(capsys):
     data = {"image":"adrian.jpg","bucket":"soaproyecto1-input"}
     # Call tested function
