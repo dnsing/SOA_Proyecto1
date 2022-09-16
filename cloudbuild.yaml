@@ -32,7 +32,7 @@ steps:
       cd cloud_function
       pylint main.py
       
- id: 'unit test'
+- id: 'unit test'
   name: 'ubuntu'
   entrypoint: 'sh'  
   args: 
