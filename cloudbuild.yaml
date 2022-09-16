@@ -17,7 +17,7 @@ steps:
 
       
 - id: 'check code and unit test'
-  name: 'gcr.io/cloud-builders/docker'
+  name: 'ubuntu'
   entrypoint: 'sh'  
   args: 
   - '-c'
