@@ -29,6 +29,8 @@ steps:
       echo "*********** Installing pip ************"
       apk add py-pip
       echo "*********** Installing requirements ************"
+      apt-get install python-dev build-essential
+      pip install .
       pip install --upgrade pip
       pip install -r requirements.txt --user
       echo "*********** Checking code ************"
