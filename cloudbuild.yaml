@@ -33,6 +33,7 @@ steps:
       pip3 install -U SQLAlchemy==1.3.12      
       pip3 install -U PyMySQL==0.9.3
       pip3 install -U pandas
+      pip3 install -U mock
       echo "*********** Run UNIT TEST ************"
       cd cloud_function
       python3 -m pytest unitTests.py
