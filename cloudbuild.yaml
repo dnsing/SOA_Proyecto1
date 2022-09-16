@@ -17,7 +17,7 @@ steps:
 
       
 - id: 'unit test'
-  name: 'gcr.io/cloud-builders/docker'
+  name: 'alpine'
   entrypoint: 'sh'  
   args: 
   - '-c'
