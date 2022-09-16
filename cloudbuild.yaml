@@ -33,7 +33,6 @@ steps:
       pylint main.py
       
 - id: 'unit test'
-  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'sh'  
   
 - id: 'tf init'
