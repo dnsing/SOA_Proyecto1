@@ -29,6 +29,8 @@ steps:
       echo "*********** Installing pip ************"
       apk add py-pip
       echo "*********** Installing requirements ************"
+      poetry lock
+      poetry install
       pip install -r requirements.txt --user
       echo "*********** Checking code ************"
       pylint main.py
