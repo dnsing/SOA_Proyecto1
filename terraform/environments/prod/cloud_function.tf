@@ -9,7 +9,7 @@ resource "google_storage_bucket_object" "zip" {
 
     # Append to the MD5 checksum of the files's content
     # to force the zip to be updated as soon as a change occurs
-    image         = "src-${data.archive_file.source.output_md5}.zip"
+    name         = "src-${data.archive_file.source.output_md5}.zip"
     bucket       = google_storage_bucket.function_bucket.name
 
     # Dependencies are automatically inferred so these lines can be deleted
@@ -19,7 +19,7 @@ resource "google_storage_bucket_object" "zip" {
     ]
 }
 resource "google_cloudfunctions_function" "function" {
-    name                  = "pruebas"
+    name                  = "SENTIMENT_ANALYSIS"
     runtime               = "python37"  # of course changeable
 
     # Get the source code of the cloud function as a Zip compression
@@ -31,7 +31,7 @@ resource "google_cloudfunctions_function" "function" {
 
     event_trigger {
         event_type = "google.storage.object.finalize"
-        resource   = "${var.project_id}-input-test"
+        resource   = "${var.project_id}-input"
     }
 
     # Dependencies are automatically inferred so these lines can be deleted
