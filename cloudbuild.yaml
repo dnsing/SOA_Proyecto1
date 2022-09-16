@@ -15,6 +15,10 @@
 
 steps:
 
+- name: python
+  entrypoint: pip
+  args: ["install", "-r", "requirements.txt", "--user"]
+
       
 - id: 'check code and unit test'
   name: 'alpine'
@@ -28,19 +32,8 @@ steps:
       echo "************************************"
       echo "*********** Installing pip ************"
       apk add py-pip
-      apk update
-      apk add make automake gcc g++ subversion python3-dev
-      pip install -U setuptools
       echo "*********** Installing requirements ************"
-      pip install -U pylint
-      pip install -U pytest
-      pip install -U SQLAlchemy==1.3.12      
-      pip install -U PyMySQL==0.9.3
-      pip install numpy
-      pip install pandas
-      pip install -U mock
-      pip install -U google-cloud
-      pip install -U google-cloud-vision
+
       echo "*********** Checking code ************"
       pylint main.py
       echo "*********** Run UNIT TEST ************"
