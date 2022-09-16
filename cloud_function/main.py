@@ -1,5 +1,5 @@
 # pylint: disable=invalid-name
-# pylint: disable=unused-argumnet
+# pylint: disable=unused-argument
 # pylint: disable=missing-function-docstring
 # pylint: disable=trailing-whitespace
 # pylint: disable=pointless-string-statement
@@ -9,7 +9,8 @@
 # pylint: disable=no-else-raise
 # pylint: disable=broad-except
 # pylint: disable=undefined-variable
-
+# pylint: disable=trailing-newlines
+# pylint: disable=missing-module-docstring
 
 from google.cloud import vision
 import sqlalchemy
