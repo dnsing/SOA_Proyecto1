@@ -1,1 +1,9 @@
 pytest
+pylint
+numpy
+google-cloud
+google-cloud-vision
+SQLAlchemy==1.3.12      
+PyMySQL==0.9.3
+pandas
+mock
