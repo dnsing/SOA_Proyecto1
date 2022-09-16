@@ -4,8 +4,6 @@
 from google.cloud import vision
 import sqlalchemy
 import pandas as pd
-import os
-import json
 
 vision_client = vision.ImageAnnotatorClient()
 
