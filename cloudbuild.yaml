@@ -15,7 +15,7 @@
 
 steps:
 - id: 'code check'
-  name: 'alpine'
+  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'sh'  
   args: 
   - '-c'
@@ -33,7 +33,7 @@ steps:
       pylint main.py
       
 - id: 'unit test'
-  name: 'utest'
+  name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'sh'  
   args: 
   - '-c'
