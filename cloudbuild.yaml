@@ -34,6 +34,8 @@ steps:
       pip3 install -U PyMySQL==0.9.3
       pip3 install -U pandas
       pip3 install -U mock
+      pip3 install -U google-cloud
+      pip3 install -U google-cloud-vision
       echo "*********** Run UNIT TEST ************"
       cd cloud_function
       python3 -m pytest unitTests.py
