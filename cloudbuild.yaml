@@ -14,23 +14,7 @@
 
 
 steps:
-- id: 'code check'
-  name: 'alpine'
-  entrypoint: 'sh'  
-  args: 
-  - '-c'
-  - | 
-      echo "************************************"
-      echo "Checking Code in branch $BRANCH_NAME"
-      echo "************************************"
-      echo "*********** Installing pip ************"
-      apk add py3-pip
-      pip3 install -U setuptools
-      echo "*********** Installing pylint ************"
-      pip3 install -U pylint
-      echo "*********** Checking code ************"
-      cd cloud_function
-      pylint main.py
+
       
 - id: 'unit test'
   name: 'gcr.io/cloud-builders/docker'
