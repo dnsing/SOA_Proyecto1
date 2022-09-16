@@ -15,7 +15,7 @@
 
 steps:
 - id: 'code check'
-  name: 'alpine'
+  name: 'ubuntu'
   entrypoint: 'sh'  
   args: 
   - '-c'
