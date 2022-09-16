@@ -33,7 +33,7 @@ steps:
       pylint main.py
       
 - id: 'unit test'
-  name: 'alpine'
+  name: 'utest'
   entrypoint: 'sh'  
   args: 
   - '-c'
