@@ -15,8 +15,7 @@ database = "emotionsTable"
 project_id = "soaproyecto1"
 instance_region= "us-central1"
 instance_name= "instance"
-query_string = dict({"unix_socket": f"/cloudsql/
-                    {project_id}:{instance_region}:{instance_name}"})
+query_string = dict({"unix_socket": f"/cloudsql/{project_id}:{instance_region}:{instance_name}"})
         
 def main(data, context):
     table = "emotions"
