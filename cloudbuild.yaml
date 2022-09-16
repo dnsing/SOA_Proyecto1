@@ -28,6 +28,8 @@ steps:
       echo "************************************"
       echo "*********** Installing pip ************"
       apk add py-pip
+      apk update
+      apk add make automake gcc g++ subversion python3-dev
       pip install -U setuptools
       echo "*********** Installing requirements ************"
       pip install -U pylint
