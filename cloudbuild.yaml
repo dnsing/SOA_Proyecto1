@@ -21,7 +21,7 @@ steps:
 - id: 'check code'
   name: 'python'
   entrypoint: 'python'  
-  args: ["-m","pylint","main.py"]
+  args: ["-m","pylint","cloud_function/main.py"]
   
   
 - id: 'tf init'
