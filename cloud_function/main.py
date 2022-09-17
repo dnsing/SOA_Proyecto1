@@ -68,6 +68,7 @@ def main(data, context):
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
     else:
+        print("imagen:")
         print(imageURL)
         result['imageUrl']=imageURL
         print(result)
